@@ -1,4 +1,4 @@
-# Lambda
+# Lambda Function Bind
 
 ## 表达形式
 
@@ -115,5 +115,65 @@ void fcn1()
     auto j = f();
     cout << j << endl;
 }
+```
+
+## 指定返回类型
+
+```cpp
+[] (int i)->int {if(i<0)return -i;else return i;};
+```
+
+## bind
+
+可以很容易的为find_if写一个比较函数，但find_if只接受一元谓词，即该函数只能有一个形参，如果有两个就很难实现。
+
+```cpp
+#include <functional>
+auto newCallable = bind(callable, arg_list);
+//当调用newCallable时，会调用callable，并传入arg_list中的参数
+//占位符形式为 std::placeholders::_n
+//表示新的函数对象中的参数的位置，当调用新的函数对象时，新函数对象会调用被调用函数，并且其参数会传递到被调用函数参数列表中持有与新函数对象中位置对应的占位符。
+ void function(arg1,arg2,arg3,arg4,arg5)
+ {
+     
+ }
+auto g = bind(function,a,b,_2,c,_1);
+//原函数有5个参数
+//g函数有2个参数，分别为_2,_1代表着原函数的arg3和arg5，a,b,c变成了固定值成为了g()的一部分
+//将function(arg1,arg2,arg3,arg4,arg5),映射为g(_1,_2)
+
+bool check_size(const string &s,string::size_type sz)
+{
+    return s.size() >= sz;
+}
+int main(int, char**) {
+    string s = "hello";
+    bool a = check_size(s, 6);
+    auto check6 = bind(check_size, std::placeholders::_1, 6);
+    bool b = check6(s);
+}
+//可以将
+```
+### 绑定引用参数
+默认下，非占位符的参数以拷贝的形势传入到bind中
+```cpp
+for_each(v.begin(),v.end(),
+        [&os,c](const string &s){os<<s<<c;});
+//输出v的每个元素
+//同样可以用函数替代lambda
+ostream &print(ostream &os,const string &s,char c)
+{
+    return os<<s<<c;
+}
+//如果使用bind完成呢
+for_each(v.begin(),v.end(),bind(print,os,_1,' '));
+//会出错
+//因此如果希望传递给bind的一个对象而不拷贝他，就要使用ref
+```
+
+### ref
+
+```cpp
+for_each(v.begin(),v.end(),bind(print,ref(os),_1,' '));
 ```
 
