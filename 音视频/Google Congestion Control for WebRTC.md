@@ -1,6 +1,6 @@
 # Google Congestion Control for WebRTC
 
-![image-20220729143625676](/home/fanshu/.config/Typora/typora-user-images/image-20220729143625676.png)
+![image-20220729143625676](..//Pictures//image-20220729143625676.png)
 
 发送方发送利用UDP发送RTP，并收到接受方反馈的RTCP报文
 
@@ -17,7 +17,7 @@ $$
 
 Remote Rate Controller是一个有限状态自动机，会根据OverUse Detector的输出s改变sigma的状态，而s的输出基于Arrival filter的m(t)。Adaptive threshold产生的阈值y(t)也会由OverUse Detector使用。
 
-![image-20220729160451701](/home/fanshu/.config/Typora/typora-user-images/image-20220729160451701.png)
+![image-20220729160451701](..//Pictures//image-20220729160451701.png)
 
 REMB Processing 会根据Ar的结果发送REMB数据包，Ar的上限是1.5Rr
 
@@ -29,7 +29,7 @@ REMB Processing 会根据Ar的结果发送REMB数据包，Ar的上限是1.5Rr
 $$
 d_{m}\left(t_{i}\right)=\left(t_{i}-t_{i-1}\right)-\left(T_{i}-T_{i-1}\right)
 $$
-![image-20220729155902269](/home/fanshu/.config/Typora/typora-user-images/image-20220729155902269.png)
+![image-20220729155902269](..//Pictures//image-20220729155902269.png)
 
 ### The over-use detector
 
@@ -37,7 +37,7 @@ $$
 
 s产生方式如下
 
-![image-20220729160410788](/home/fanshu/.config/Typora/typora-user-images/image-20220729160410788.png)
+![image-20220729160410788](..//Pictures//image-20220729160410788.png)
 
 ### Remote rate controller
 
